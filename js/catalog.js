@@ -12,7 +12,13 @@ function populateForm() {
   //TODO: Add an <option> tag inside the form's select for each product
   var selectElement = document.getElementById('items');
   for (var i in Product.allProducts) {
+    var instanceProduct = Product.allProducts[i];
 
+    var option = document.createElement('option');
+
+    selectElement.appendChild(option);
+
+    option.textContent = instanceProduct.name;
   }
 
 }
@@ -23,7 +29,7 @@ function populateForm() {
 function handleSubmit(event) {
 
   // TODO: Prevent the page from reloading
-
+  event.preventDefault();
   // Do all the things ...
   addSelectedItemToCart();
   cart.saveToLocalStorage();
@@ -34,18 +40,38 @@ function handleSubmit(event) {
 
 // TODO: Add the selected item and quantity to the cart
 function addSelectedItemToCart() {
+  var selsctedItem = document.getElementById('items').value;
+
+  var selsctedQuantity = document.getElementById('quantity').value;
+
+  console.log('selsctedQuantity : ', selsctedQuantity);
+
+
+  cart.addItem(selsctedItem, selsctedQuantity);
   // TODO: suss out the item picked from the select list
   // TODO: get the quantity
   // TODO: using those, add one item to the Cart
+
 }
 
 // TODO: Update the cart count in the header nav with the number of items in the Cart
-function updateCounter() {}
+function updateCounter() {
+  var quantity = document.getElementById('quantity').value;
+  document.getElementById('itemCount').textContent = '(' + quantity + ')';
+}
 
 // TODO: As you add items into the cart, show them (item & quantity) in the cart preview div
 function updateCartPreview() {
+
   // TODO: Get the item and quantity from the form
   // TODO: Add a new element to the cartContents div with that information
+
+  var item = document.getElementById('items').value;
+  var quantity = document.getElementById('quantity').value;
+  var cartOutput = document.getElementById('cartContents');
+  var itemElement = document.createElement('div');
+  cartOutput.appendChild(itemElement);
+  itemElement.textContent = item + ' : ' + quantity;
 }
 
 // Set up the "submit" event listener on the form.
